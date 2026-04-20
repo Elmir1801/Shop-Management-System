@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class StockUpdate : Form
     {
-        /*
-         * 
-         * This class handles updation of Stock details.
-         * 
-         * 
-         */ 
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public StockUpdate()
         {
@@ -33,14 +27,12 @@ namespace ShopManagementSystem
                 Connect connectObj = new Connect();
                 using (con = connectObj.connect())
                 {
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             ProductName.Text = sdr["PNAME"].ToString();
@@ -48,7 +40,6 @@ namespace ShopManagementSystem
                         con.Close();
                     }
                 }
-                
             }
             catch (Exception ex)
             {
@@ -56,7 +47,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -70,28 +61,22 @@ namespace ShopManagementSystem
                 MessageBox.Show("Please provide all the details", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             try
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("UPDATE STOCK SET QUANTITY = @quantity WHERE PID = @pid", con);
-                
+                MySqlCommand cmd = new MySqlCommand("UPDATE STOCK SET QUANTITY = @quantity WHERE PID = @pid", con);  // ← changed
                 cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                 cmd.Parameters.AddWithValue("@quantity", Quantity.Text);
                 int i = cmd.ExecuteNonQuery();
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Stock Updation Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
                     MessageBox.Show("Stock Updation Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 con.Close();
                 ProductID.Clear();
                 Quantity.Clear();
@@ -103,7 +88,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -120,6 +105,12 @@ namespace ShopManagementSystem
         private void StockUpdate_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void StockUpdate_Load(object sender, EventArgs e)
+        {
+            ProductName.ReadOnly = true;
+            ProductName.BackColor = System.Drawing.Color.LightGray;
         }
     }
 }

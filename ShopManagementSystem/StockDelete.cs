@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,8 @@ namespace ShopManagementSystem
 {
     public partial class StockDelete : Form
     {
-        /*
-         * 
-         * This class handles the stock delete operation.
-         * 
-         * 
-         */ 
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
+
         public StockDelete()
         {
             InitializeComponent();
@@ -30,24 +25,18 @@ namespace ShopManagementSystem
             try
             {
                 Connect connectObj = new Connect();
-
                 con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("DELETE FROM STOCK WHERE PID = @pid", con);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM STOCK WHERE PID = @pid", con);  // ← changed
                 cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                 int i = cmd.ExecuteNonQuery();
-                
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Stock Deletion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
                     MessageBox.Show("Stock Deletion Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 con.Close();
                 ProductID.Clear();
                 ProductName.Clear();
@@ -58,7 +47,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -72,14 +61,12 @@ namespace ShopManagementSystem
                 Connect connectObj = new Connect();
                 using (con = connectObj.connect())
                 {
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        con.Open();
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed (also removed con.Open() - already open)
                         {
                             sdr.Read();
                             ProductName.Text = sdr["PNAME"].ToString();
@@ -94,7 +81,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -110,6 +97,10 @@ namespace ShopManagementSystem
         private void StockDelete_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void StockDelete_Load(object sender, EventArgs e)
+        {
         }
     }
 }

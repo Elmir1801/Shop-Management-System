@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class ProductView : Form
     {
-        /*
-         * 
-         * This class handles the view operations of Product details.
-         * 
-         * 
-         */ 
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public ProductView()
         {
@@ -31,22 +25,18 @@ namespace ShopManagementSystem
             try
             {
                 Connect connectObj = new Connect();
-
                 using (con = connectObj.connect())
                 {
-
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT PID,PNAME,AMOUNT,VID FROM PRODUCT WHERE PNAME = @pname"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT PID,PNAME,AMOUNT,VID FROM PRODUCT WHERE PNAME = @pname"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@pname", ProductName.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             ProdName.Text = sdr["PNAME"].ToString();
-
                             VendorID.Text = sdr["VID"].ToString();
                             Amount.Text = sdr["AMOUNT"].ToString();
                             ProductID.Text = sdr["PID"].ToString();
@@ -61,7 +51,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -80,6 +70,10 @@ namespace ShopManagementSystem
         private void ProductView_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ProductView_Load(object sender, EventArgs e)
+        {
         }
     }
 }

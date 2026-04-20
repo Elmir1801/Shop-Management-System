@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,8 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class CustomerView : Form
     {
-
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public CustomerView()
         {
@@ -26,18 +25,15 @@ namespace ShopManagementSystem
             try
             {
                 Connect connectObj = new Connect();
-                
+
                 using (con = connectObj.connect())
                 {
-
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT C_ID,CNAME,PHONE_NUMBER,ADDRESS,EMAIL FROM CUSTOMER WHERE CNAME = @cname"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT C_ID,CNAME,PHONE_NUMBER,ADDRESS,EMAIL FROM CUSTOMER WHERE CNAME = @cname"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@cname", CustomerName.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             CustName.Text = sdr["CNAME"].ToString();
@@ -46,8 +42,6 @@ namespace ShopManagementSystem
                             Email.Text = sdr["EMAIL"].ToString();
                             CustID.Text = sdr["C_ID"].ToString();
                         }
-
-                        
                     }
                 }
             }
@@ -57,8 +51,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                //Close the connection
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -67,7 +60,6 @@ namespace ShopManagementSystem
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            //Clear all the textboxes
             PhoneNo.Clear();
             Address.Clear();
             Email.Clear();
@@ -79,6 +71,10 @@ namespace ShopManagementSystem
         private void CustomerView_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void CustomerView_Load(object sender, EventArgs e)
+        {
         }
     }
 }

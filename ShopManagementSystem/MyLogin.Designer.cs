@@ -48,8 +48,9 @@
             this.NamePanel.Controls.Add(this.label1);
             this.NamePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.NamePanel.Location = new System.Drawing.Point(0, 0);
+            this.NamePanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.NamePanel.Name = "NamePanel";
-            this.NamePanel.Size = new System.Drawing.Size(1922, 101);
+            this.NamePanel.Size = new System.Drawing.Size(1028, 82);
             this.NamePanel.TabIndex = 3;
             // 
             // label1
@@ -57,9 +58,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Ink Free", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(780, 34);
+            this.label1.Location = new System.Drawing.Point(585, 28);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(470, 41);
+            this.label1.Size = new System.Drawing.Size(385, 34);
             this.label1.TabIndex = 0;
             this.label1.Text = "SHOP MANAGEMENT SYSTEM";
             // 
@@ -73,27 +75,30 @@
             this.panel2.Controls.Add(this.userName);
             this.panel2.Controls.Add(this.PwdLAbel);
             this.panel2.Controls.Add(this.userNameLabel);
-            this.panel2.Location = new System.Drawing.Point(718, 347);
+            this.panel2.Location = new System.Drawing.Point(538, 282);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(563, 374);
+            this.panel2.Size = new System.Drawing.Size(422, 304);
             this.panel2.TabIndex = 4;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(241, 12);
+            this.label4.Location = new System.Drawing.Point(181, 10);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 32);
+            this.label4.Size = new System.Drawing.Size(68, 25);
             this.label4.TabIndex = 6;
             this.label4.Text = "LOGIN";
             // 
             // loginButton
             // 
             this.loginButton.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.loginButton.Location = new System.Drawing.Point(305, 243);
+            this.loginButton.Location = new System.Drawing.Point(229, 197);
+            this.loginButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(212, 59);
+            this.loginButton.Size = new System.Drawing.Size(159, 48);
             this.loginButton.TabIndex = 5;
             this.loginButton.Text = "LOGIN";
             this.loginButton.UseVisualStyleBackColor = false;
@@ -102,9 +107,10 @@
             // clearButton
             // 
             this.clearButton.BackColor = System.Drawing.Color.LightCoral;
-            this.clearButton.Location = new System.Drawing.Point(42, 243);
+            this.clearButton.Location = new System.Drawing.Point(32, 197);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(197, 59);
+            this.clearButton.Size = new System.Drawing.Size(148, 48);
             this.clearButton.TabIndex = 4;
             this.clearButton.Text = "CLEAR";
             this.clearButton.UseVisualStyleBackColor = false;
@@ -113,18 +119,20 @@
             // password
             // 
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.password.Location = new System.Drawing.Point(200, 147);
+            this.password.Location = new System.Drawing.Point(150, 119);
+            this.password.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.password.Name = "password";
             this.password.PasswordChar = '*';
-            this.password.Size = new System.Drawing.Size(317, 36);
+            this.password.Size = new System.Drawing.Size(239, 30);
             this.password.TabIndex = 3;
             // 
             // userName
             // 
             this.userName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userName.Location = new System.Drawing.Point(200, 62);
+            this.userName.Location = new System.Drawing.Point(150, 50);
+            this.userName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.userName.Name = "userName";
-            this.userName.Size = new System.Drawing.Size(317, 36);
+            this.userName.Size = new System.Drawing.Size(239, 30);
             this.userName.TabIndex = 2;
             // 
             // PwdLAbel
@@ -132,9 +140,10 @@
             this.PwdLAbel.AutoSize = true;
             this.PwdLAbel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PwdLAbel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.PwdLAbel.Location = new System.Drawing.Point(36, 148);
+            this.PwdLAbel.Location = new System.Drawing.Point(27, 120);
+            this.PwdLAbel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PwdLAbel.Name = "PwdLAbel";
-            this.PwdLAbel.Size = new System.Drawing.Size(120, 35);
+            this.PwdLAbel.Size = new System.Drawing.Size(93, 28);
             this.PwdLAbel.TabIndex = 1;
             this.PwdLAbel.Text = "Password";
             // 
@@ -143,22 +152,25 @@
             this.userNameLabel.AutoSize = true;
             this.userNameLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userNameLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.userNameLabel.Location = new System.Drawing.Point(36, 61);
+            this.userNameLabel.Location = new System.Drawing.Point(27, 50);
+            this.userNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.userNameLabel.Name = "userNameLabel";
-            this.userNameLabel.Size = new System.Drawing.Size(139, 35);
+            this.userNameLabel.Size = new System.Drawing.Size(108, 28);
             this.userNameLabel.TabIndex = 0;
             this.userNameLabel.Text = "User Name";
             // 
             // MyLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1922, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.NamePanel);
             this.Controls.Add(this.panel2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MyLogin";
             this.Text = "MyLogin";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MyLogin_Load);
             this.NamePanel.ResumeLayout(false);
             this.NamePanel.PerformLayout();
             this.panel2.ResumeLayout(false);

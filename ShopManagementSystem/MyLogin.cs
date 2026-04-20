@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,8 +13,8 @@ namespace ShopManagementSystem
 {
     public partial class MyLogin : Form
     {
+        MySqlConnection con;  // ← changed
 
-        SqlConnection con;
         public MyLogin()
         {
             InitializeComponent();
@@ -22,53 +22,35 @@ namespace ShopManagementSystem
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            /*
-             * 
-             * This method is called on click on login button
-             * 
-             */
             if (userName.Text == "" || this.password.Text == "")
             {
                 MessageBox.Show("Please provide UserName and Password", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             string username = userName.Text;
             string password = this.password.Text;
-
             try
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("Select * from LOGIN where UserName=@username and Password=@password", con);
-
+                MySqlCommand cmd = new MySqlCommand("Select * from LOGIN where UserName=@username and Password=@password", con);  // ← changed
                 cmd.Parameters.AddWithValue("@username", userName.Text);
                 cmd.Parameters.AddWithValue("@password", this.password.Text);
-
-                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
-
+                MySqlDataAdapter adapt = new MySqlDataAdapter(cmd);  // ← changed
                 DataSet ds = new DataSet();
                 adapt.Fill(ds);
-
                 int count = ds.Tables[0].Rows.Count;
-                //If count is equal to 1, than show frmMain form
-
                 if (count == 1)
                 {
                     MessageBox.Show("Login Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     FormMenu menu = new FormMenu();
                     this.Hide();
                     menu.Show();
-                    
-
                 }
                 else
                 {
                     MessageBox.Show("Invalid UserName or Password", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 con.Close();
             }
             catch (Exception ex)
@@ -88,6 +70,10 @@ namespace ShopManagementSystem
         {
             userName.Clear();
             password.Clear();
+        }
+
+        private void MyLogin_Load(object sender, EventArgs e)
+        {
         }
     }
 }

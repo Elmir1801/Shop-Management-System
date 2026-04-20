@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,21 +13,12 @@ namespace ShopManagementSystem
 {
     public partial class CustomerDelete : Form
     {
-        /*
-         * 
-         * This class handles deletion of the customer details.
-         * 
-         * 
-         */ 
-
-
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public CustomerDelete()
         {
             InitializeComponent();
         }
-
 
         private void Search_Click(object sender, EventArgs e)
         {
@@ -36,16 +27,12 @@ namespace ShopManagementSystem
                 Connect connectObj = new Connect();
                 using (con = connectObj.connect())
                 {
-
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT C_ID FROM CUSTOMER WHERE CNAME = @cname"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT C_ID FROM CUSTOMER WHERE CNAME = @cname"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@cname", CustomerName.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             CustomerID.Text = sdr["C_ID"].ToString();
@@ -60,12 +47,11 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
             }
-
         }
 
         private void Delete_Click(object sender, EventArgs e)
@@ -74,22 +60,17 @@ namespace ShopManagementSystem
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("DELETE FROM CUSTOMER WHERE C_ID = @cid", con);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM CUSTOMER WHERE C_ID = @cid", con);  // ← changed
                 cmd.Parameters.AddWithValue("@cid", CustomerID.Text);
                 int i = cmd.ExecuteNonQuery();
-                
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Customer Deletion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
                     MessageBox.Show("Customer Deletion Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 CustomerName.Clear();
                 CustomerID.Clear();
             }
@@ -99,8 +80,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                //Close the connection to DB
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }

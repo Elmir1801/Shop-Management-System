@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,14 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class OrderInsert : Form
     {
-        /*
-         * 
-         * This class handles the order creation process.
-         * 
-         * 
-         */ 
-
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
         DataTable transactionDT = new DataTable();
         String cid = "";
 
@@ -45,12 +38,11 @@ namespace ShopManagementSystem
             Connect connectObj = new Connect();
             con = connectObj.connect();
             DataTable dt = new DataTable();
-            
 
             try
             {
                 String sql = "SELECT CNAME,ADDRESS,PHONE_NUMBER,EMAIL,C_ID FROM CUSTOMER WHERE C_ID LIKE '%" + keyword + "%' OR CNAME LIKE '%" + keyword + "%';";
-                SqlDataAdapter adpt = new SqlDataAdapter(sql, con);
+                MySqlDataAdapter adpt = new MySqlDataAdapter(sql, con);  // ← changed
 
                 adpt.Fill(dt);
                 if (dt.Rows.Count > 0)
@@ -61,7 +53,6 @@ namespace ShopManagementSystem
                     custEmail.Text = dt.Rows[0]["EMAIL"].ToString();
                     cid = dt.Rows[0]["C_ID"].ToString();
                 }
-
             }
             catch (Exception ex)
             {
@@ -74,19 +65,16 @@ namespace ShopManagementSystem
             String keyword = Product_search.Text;
             if (keyword == "")
             {
-
                 return;
             }
             Connect connectObj = new Connect();
             con = connectObj.connect();
-
             DataTable dt = new DataTable();
-            
 
             try
             {
                 String sql = "SELECT PID,PNAME,AMOUNT FROM PRODUCT WHERE PID LIKE '%" + keyword + "%' OR PNAME LIKE '%" + keyword + "%';";
-                SqlDataAdapter adpt = new SqlDataAdapter(sql, con);
+                MySqlDataAdapter adpt = new MySqlDataAdapter(sql, con);  // ← changed
 
                 adpt.Fill(dt);
                 if (dt.Rows.Count > 0)
@@ -94,9 +82,7 @@ namespace ShopManagementSystem
                     Product_Name.Text = dt.Rows[0]["PNAME"].ToString();
                     ProductID.Text = dt.Rows[0]["PID"].ToString();
                     Amount.Text = dt.Rows[0]["AMOUNT"].ToString();
-
                 }
-
             }
             catch (Exception ex)
             {
@@ -104,7 +90,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -124,22 +110,20 @@ namespace ShopManagementSystem
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                SqlCommand cmd = new SqlCommand("Select * from STOCK where PID =@pid and QUANTITY >= @quantity", con);
-                
+                MySqlCommand cmd = new MySqlCommand("Select * from STOCK where PID =@pid and QUANTITY >= @quantity", con);  // ← changed
+
                 cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                 cmd.Parameters.AddWithValue("@quantity", Quantity.Text);
-                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                MySqlDataAdapter adapt = new MySqlDataAdapter(cmd);  // ← changed
                 DataSet ds = new DataSet();
                 adapt.Fill(ds);
                 con.Close();
                 int count = ds.Tables[0].Rows.Count;
-                //If count is equal to 1, than show frmMain form
                 if (count != 1)
                 {
                     MessageBox.Show("Check stock!!!!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
             }
             catch (Exception ex)
             {
@@ -147,17 +131,16 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
             }
+
             decimal quantity = decimal.Parse(Quantity.Text);
             decimal amount = decimal.Parse(Amount.Text);
             decimal total = amount * quantity;
             decimal subtotal = decimal.Parse(SubTotal.Text);
-
-
             subtotal += total;
 
             if (PNAME == "")
@@ -177,36 +160,30 @@ namespace ShopManagementSystem
                     return;
                 }
 
-
                 Product_Name.Clear();
                 ProductID.Clear();
                 Quantity.Text = "0";
                 Amount.Text = "0";
-
             }
         }
 
         private void Save_Click(object sender, EventArgs e)
         {
-            //Create the orders 
             try
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                SqlCommand cmd = new SqlCommand("Insert into MYORDER (ORD_ID,CID,DATE,AMOUNT) values(@oid,@cid,@date,@amount);", con);
-                
+                MySqlCommand cmd = new MySqlCommand("Insert into MYORDER (ORD_ID,CID,DATE,AMOUNT) values(@oid,@cid,@date,@amount);", con);  // ← changed
+
                 cmd.Parameters.AddWithValue("@oid", OrderID.Text);
-                //cmd.Parameters.AddWithValue("@pid", textBox8.Text);
                 cmd.Parameters.AddWithValue("@cid", cid);
                 cmd.Parameters.AddWithValue("@date", date.Text);
                 cmd.Parameters.AddWithValue("@amount", Total_Amt.Text);
 
                 int i = cmd.ExecuteNonQuery();
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Order Insertion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
@@ -220,34 +197,26 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                if (con != null) con.Close();
             }
-            //Insert into orderDetails 
+
             try
             {
                 int j;
-
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                
 
                 for (int i = 0; i < transactionDT.Rows.Count; i++)
                 {
-
-                    SqlCommand cmd = new SqlCommand("Insert into ORDER_DETAILS (ord_id,pid,quantity) values(@oid,@pid,@quantity);", con);
+                    MySqlCommand cmd = new MySqlCommand("Insert into ORDER_DETAILS (ord_id,pid,quantity) values(@oid,@pid,@quantity);", con);  // ← changed
 
                     cmd.Parameters.AddWithValue("@oid", OrderID.Text);
                     cmd.Parameters.AddWithValue("@pid", transactionDT.Rows[i]["Product ID"].ToString());
                     cmd.Parameters.AddWithValue("@quantity", transactionDT.Rows[i]["Quantity"].ToString());
 
-
                     j = cmd.ExecuteNonQuery();
                 }
                 con.Close();
-
             }
             catch (Exception ex)
             {
@@ -255,31 +224,25 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                if (con != null) con.Close();
             }
-            //Update stock table after creating order
+
             try
             {
                 int j;
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                
+
                 for (int i = 0; i < transactionDT.Rows.Count; i++)
                 {
-
-                    SqlCommand cmd = new SqlCommand("UPDATE STOCK SET QUANTITY = QUANTITY - @quantity WHERE PID = @pid", con);
+                    MySqlCommand cmd = new MySqlCommand("UPDATE STOCK SET QUANTITY = QUANTITY - @quantity WHERE PID = @pid", con);  // ← changed
 
                     cmd.Parameters.AddWithValue("@pid", transactionDT.Rows[i]["Product ID"].ToString());
                     cmd.Parameters.AddWithValue("@quantity", transactionDT.Rows[i]["Quantity"].ToString());
 
-
                     j = cmd.ExecuteNonQuery();
                 }
                 con.Close();
-
             }
             catch (Exception ex)
             {
@@ -287,13 +250,9 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                if (con != null) con.Close();
             }
 
-            //Clear all the fields.
             Cust_search.Clear();
             CustName.Clear();
             PhoneNumber.Clear();
@@ -324,10 +283,7 @@ namespace ShopManagementSystem
 
         private void Discount_TextChanged(object sender, EventArgs e)
         {
-            if (SubTotal.Text == "")
-            {
-                return;
-            }
+            if (SubTotal.Text == "") return;
             if (Discount.Text == "")
             {
                 MessageBox.Show("Add value of Discount first", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -345,14 +301,11 @@ namespace ShopManagementSystem
         {
             if (Total_Amt.Text == "")
             {
-                MessageBox.Show("Calcuate Grand total after discount", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Calculate Grand total after discount", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                if (Total_Amt.Text == "" || GST.Text == "")
-                {
-                    return;
-                }
+                if (Total_Amt.Text == "" || GST.Text == "") return;
                 decimal previousGT = decimal.Parse(Total_Amt.Text);
                 decimal gst = decimal.Parse(GST.Text);
                 decimal GTwithGst = ((100 + gst) / 100) * previousGT;
@@ -362,18 +315,10 @@ namespace ShopManagementSystem
 
         private void PaidAmount_TextChanged(object sender, EventArgs e)
         {
-            if (PaidAmount.Text == "" || Total_Amt.Text == "")
-            {
-                return;
-            }
+            if (PaidAmount.Text == "" || Total_Amt.Text == "") return;
             decimal paidamt = decimal.Parse(PaidAmount.Text);
             decimal gtamt = decimal.Parse(Total_Amt.Text);
-
-            if (paidamt < gtamt)
-            {
-                //MessageBox.Show("Please check the total amount again");
-                return;
-            }
+            if (paidamt < gtamt) return;
             decimal retamt = paidamt - gtamt;
             ReturnAmount.Text = retamt.ToString();
         }

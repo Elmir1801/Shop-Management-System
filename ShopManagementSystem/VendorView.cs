@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class VendorView : Form
     {
-        /*
-         * 
-         * This class  handles the view operation on Vendor data.
-         * 
-         * 
-         */ 
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public VendorView()
         {
@@ -31,17 +25,14 @@ namespace ShopManagementSystem
             try
             {
                 Connect connectObj = new Connect();
-
                 using (con = connectObj.connect())
                 {
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT VID,VNAME,PHONE_NUMBER,ADDRESS,EMAIL FROM VENDOR WHERE VNAME = @vname"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT VID,VNAME,PHONE_NUMBER,ADDRESS,EMAIL FROM VENDOR WHERE VNAME = @vname"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@vname", VendorName.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             VendorID.Text = sdr["VID"].ToString();
@@ -60,7 +51,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -75,6 +66,10 @@ namespace ShopManagementSystem
             Email.Clear();
             VendorID.Clear();
             VendorName2.Clear();
+        }
+
+        private void VendorView_Load(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -46,8 +46,9 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1924, 53);
+            this.panel1.Size = new System.Drawing.Size(1028, 43);
             this.panel1.TabIndex = 39;
             // 
             // label1
@@ -55,18 +56,20 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(900, 9);
+            this.label1.Location = new System.Drawing.Point(675, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(263, 32);
+            this.label1.Size = new System.Drawing.Size(208, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "DELETE STOCK DETAILS";
             // 
             // Delete
             // 
             this.Delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Delete.Location = new System.Drawing.Point(200, 309);
+            this.Delete.Location = new System.Drawing.Point(150, 251);
+            this.Delete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(139, 42);
+            this.Delete.Size = new System.Drawing.Size(104, 34);
             this.Delete.TabIndex = 45;
             this.Delete.Text = "DELETE";
             this.Delete.UseVisualStyleBackColor = true;
@@ -75,9 +78,10 @@
             // Clear
             // 
             this.Clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Clear.Location = new System.Drawing.Point(6, 309);
+            this.Clear.Location = new System.Drawing.Point(4, 251);
+            this.Clear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(139, 42);
+            this.Clear.Size = new System.Drawing.Size(104, 34);
             this.Clear.TabIndex = 44;
             this.Clear.Text = "CLEAR";
             this.Clear.UseVisualStyleBackColor = true;
@@ -86,45 +90,50 @@
             // ProductName
             // 
             this.ProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductName.Location = new System.Drawing.Point(148, 210);
+            this.ProductName.Location = new System.Drawing.Point(111, 171);
+            this.ProductName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ProductName.Name = "ProductName";
-            this.ProductName.Size = new System.Drawing.Size(191, 26);
+            this.ProductName.Size = new System.Drawing.Size(144, 23);
             this.ProductName.TabIndex = 43;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(13, 216);
+            this.label3.Location = new System.Drawing.Point(10, 176);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 20);
+            this.label3.Size = new System.Drawing.Size(98, 17);
             this.label3.TabIndex = 42;
             this.label3.Text = "Product Name";
             // 
             // ProductID
             // 
             this.ProductID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductID.Location = new System.Drawing.Point(148, 152);
+            this.ProductID.Location = new System.Drawing.Point(111, 124);
+            this.ProductID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ProductID.Name = "ProductID";
-            this.ProductID.Size = new System.Drawing.Size(191, 26);
+            this.ProductID.Size = new System.Drawing.Size(144, 23);
             this.ProductID.TabIndex = 41;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(13, 158);
+            this.label2.Location = new System.Drawing.Point(10, 128);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 20);
+            this.label2.Size = new System.Drawing.Size(74, 17);
             this.label2.TabIndex = 40;
             this.label2.Text = "Product ID";
             // 
             // Search
             // 
             this.Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Search.Location = new System.Drawing.Point(395, 144);
+            this.Search.Location = new System.Drawing.Point(296, 117);
+            this.Search.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(139, 42);
+            this.Search.Size = new System.Drawing.Size(104, 34);
             this.Search.TabIndex = 48;
             this.Search.Text = "Search";
             this.Search.UseVisualStyleBackColor = true;
@@ -132,9 +141,9 @@
             // 
             // StockDelete
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.Clear);
@@ -143,10 +152,12 @@
             this.Controls.Add(this.ProductID);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Search);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "StockDelete";
             this.Text = "StockDelete";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Deactivate += new System.EventHandler(this.StockDelete_Deactivate);
+            this.Load += new System.EventHandler(this.StockDelete_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

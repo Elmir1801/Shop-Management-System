@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,14 +13,8 @@ namespace ShopManagementSystem
 {
     public partial class ProductUpdate : Form
     {
+        MySqlConnection con;  // ← changed
 
-        /*
-         * 
-         * This class handles the updation of product data.
-         * 
-         */
-
-        SqlConnection con;
         public ProductUpdate()
         {
             InitializeComponent();
@@ -37,19 +31,16 @@ namespace ShopManagementSystem
             {
                 Connect conObj = new Connect();
                 con = conObj.connect();
-                SqlCommand cmd = new SqlCommand("UPDATE PRODUCT SET pname = @pname,amount = @amount,vid = @vid WHERE pid = @id;", con);
-                
+                MySqlCommand cmd = new MySqlCommand("UPDATE PRODUCT SET pname = @pname,amount = @amount,vid = @vid WHERE pid = @id;", con);  // ← changed
+
                 cmd.Parameters.AddWithValue("@id", productID.Text);
                 cmd.Parameters.AddWithValue("@pname", ProductName.Text);
                 cmd.Parameters.AddWithValue("@vid", VendorID.Text);
                 cmd.Parameters.AddWithValue("@amount", Amount.Text);
-                //cid += 1;
                 int i = cmd.ExecuteNonQuery();
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Product Updation Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
@@ -63,7 +54,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -85,6 +76,10 @@ namespace ShopManagementSystem
         private void ProductUpdate_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ProductUpdate_Load(object sender, EventArgs e)
+        {
         }
     }
 }

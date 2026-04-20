@@ -46,8 +46,9 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1924, 53);
+            this.panel1.Size = new System.Drawing.Size(1028, 43);
             this.panel1.TabIndex = 42;
             // 
             // label1
@@ -55,9 +56,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(900, 9);
+            this.label1.Location = new System.Drawing.Point(675, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(165, 32);
+            this.label1.Size = new System.Drawing.Size(131, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "VIEW ORDERS";
             // 
@@ -67,18 +69,20 @@
             this.ViewData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.ViewData.BackgroundColor = System.Drawing.SystemColors.Control;
             this.ViewData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ViewData.Location = new System.Drawing.Point(21, 166);
+            this.ViewData.Location = new System.Drawing.Point(16, 135);
+            this.ViewData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ViewData.Name = "ViewData";
             this.ViewData.RowTemplate.Height = 24;
-            this.ViewData.Size = new System.Drawing.Size(1143, 382);
+            this.ViewData.Size = new System.Drawing.Size(857, 310);
             this.ViewData.TabIndex = 41;
             // 
             // Search
             // 
             this.Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Search.Location = new System.Drawing.Point(349, 93);
+            this.Search.Location = new System.Drawing.Point(262, 76);
+            this.Search.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(85, 33);
+            this.Search.Size = new System.Drawing.Size(64, 27);
             this.Search.TabIndex = 40;
             this.Search.Text = "Search";
             this.Search.UseVisualStyleBackColor = true;
@@ -87,27 +91,30 @@
             // orderID
             // 
             this.orderID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.orderID.Location = new System.Drawing.Point(111, 98);
+            this.orderID.Location = new System.Drawing.Point(83, 80);
+            this.orderID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.orderID.Name = "orderID";
-            this.orderID.Size = new System.Drawing.Size(214, 26);
+            this.orderID.Size = new System.Drawing.Size(162, 23);
             this.orderID.TabIndex = 39;
             // 
             // OrderIdlbl
             // 
             this.OrderIdlbl.AutoSize = true;
             this.OrderIdlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OrderIdlbl.Location = new System.Drawing.Point(18, 98);
+            this.OrderIdlbl.Location = new System.Drawing.Point(14, 80);
+            this.OrderIdlbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OrderIdlbl.Name = "OrderIdlbl";
-            this.OrderIdlbl.Size = new System.Drawing.Size(74, 20);
+            this.OrderIdlbl.Size = new System.Drawing.Size(62, 17);
             this.OrderIdlbl.TabIndex = 38;
             this.OrderIdlbl.Text = "Order ID";
             // 
             // Print
             // 
             this.Print.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Print.Location = new System.Drawing.Point(473, 95);
+            this.Print.Location = new System.Drawing.Point(355, 77);
+            this.Print.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Print.Name = "Print";
-            this.Print.Size = new System.Drawing.Size(85, 33);
+            this.Print.Size = new System.Drawing.Size(64, 27);
             this.Print.TabIndex = 45;
             this.Print.Text = "Print";
             this.Print.UseVisualStyleBackColor = true;
@@ -115,19 +122,21 @@
             // 
             // OrderView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ViewData);
             this.Controls.Add(this.Search);
             this.Controls.Add(this.orderID);
             this.Controls.Add(this.OrderIdlbl);
             this.Controls.Add(this.Print);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "OrderView";
             this.Text = "OrderView";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Deactivate += new System.EventHandler(this.OrderView_Deactivate);
+            this.Load += new System.EventHandler(this.OrderView_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ViewData)).EndInit();

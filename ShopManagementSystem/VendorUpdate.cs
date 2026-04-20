@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class VendorUpdate : Form
     {
-        /*
-         * 
-         * This class handles the updation of vendor details.
-         * 
-         * 
-         */ 
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public VendorUpdate()
         {
@@ -33,26 +27,21 @@ namespace ShopManagementSystem
                 MessageBox.Show("Please provide all the details", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             try
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                
-                SqlCommand cmd = new SqlCommand("UPDATE VENDOR SET vname = @vname,address = @address,phone_number = @phno,email = @email WHERE vid = @id;", con);
-                
+                MySqlCommand cmd = new MySqlCommand("UPDATE VENDOR SET vname = @vname,address = @address,phone_number = @phno,email = @email WHERE vid = @id;", con);  // ← changed
+
                 cmd.Parameters.AddWithValue("@id", VendorID.Text);
                 cmd.Parameters.AddWithValue("@vname", VendorName.Text);
                 cmd.Parameters.AddWithValue("@phno", Convert.ToInt64(PhoneNumber.Text));
                 cmd.Parameters.AddWithValue("@address", VendorAddress.Text);
                 cmd.Parameters.AddWithValue("@email", email.Text);
-                //cid += 1;
                 int i = cmd.ExecuteNonQuery();
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Vendor Updation Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
@@ -66,12 +55,11 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
             }
-
             VendorName.Clear();
             VendorAddress.Clear();
             PhoneNumber.Clear();
@@ -91,6 +79,10 @@ namespace ShopManagementSystem
         private void VendorUpdate_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void VendorUpdate_Load(object sender, EventArgs e)
+        {
         }
     }
 }

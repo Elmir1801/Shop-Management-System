@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,14 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class OrderDelete : Form
     {
-        /*
-         * 
-         * This class handles the deletion of Order data
-         * 
-         * 
-         */ 
-
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public OrderDelete()
         {
@@ -33,22 +26,19 @@ namespace ShopManagementSystem
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                SqlCommand cmd = new SqlCommand("DELETE FROM MYORDER WHERE ORD_ID = @oid", con);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM MYORDER WHERE ORD_ID = @oid", con);  // ← changed
                 cmd.Parameters.AddWithValue("@oid", OrderID.Text);
                 int i = cmd.ExecuteNonQuery();
                 con.Close();
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
                     MessageBox.Show("Order Deletion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
                     MessageBox.Show("Order Deletion Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 OrderID.Clear();
-
             }
             catch (Exception ex)
             {
@@ -56,7 +46,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -71,6 +61,10 @@ namespace ShopManagementSystem
         private void OrderDelete_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void OrderDelete_Load(object sender, EventArgs e)
+        {
         }
     }
 }

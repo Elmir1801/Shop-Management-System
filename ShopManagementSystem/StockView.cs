@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class StockView : Form
     {
-        /*
-         * 
-         * This class handles view operation on Stock data.
-         * 
-         * 
-         */ 
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public StockView()
         {
@@ -31,30 +25,25 @@ namespace ShopManagementSystem
             try
             {
                 Connect connectObj = new Connect();
-
                 using (con = connectObj.connect())
                 {
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             Productname.Text = sdr["PNAME"].ToString();
                         }
-                        
                     }
-                    using (SqlCommand cmd = new SqlCommand("SELECT QUANTITY FROM STOCK WHERE PID = @pid"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT QUANTITY FROM STOCK WHERE PID = @pid"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@pid", ProductID.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             Quantity.Text = sdr["QUANTITY"].ToString();
@@ -69,7 +58,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -86,6 +75,14 @@ namespace ShopManagementSystem
         private void StockView_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void StockView_Load(object sender, EventArgs e)
+        {
+            Productname.ReadOnly = true;
+            Productname.BackColor = System.Drawing.Color.LightGray;
+            Quantity.ReadOnly = true;
+            Quantity.BackColor = System.Drawing.Color.LightGray;
         }
     }
 }
