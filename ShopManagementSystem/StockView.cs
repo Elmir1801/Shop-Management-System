@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,66 +8,55 @@ namespace ShopManagementSystem
 {
     public partial class StockView : Form
     {
-        /*
-         * 
-         * This class handles view operation on Stock data.
-         * 
-         * 
-         */ 
-        SqlConnection con;
-
         public StockView()
         {
             InitializeComponent();
         }
 
-        private void search_Click(object sender, EventArgs e)
+        private async void search_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProductID.Text))
+            {
+                MessageBox.Show("Please enter Product ID", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            await ViewStock();
+        }
+
+        private async Task ViewStock()
         {
             try
             {
-                Connect connectObj = new Connect();
-
-                using (con = connectObj.connect())
+                using (HttpClient client = new HttpClient())
                 {
+                    string apiUrl = $"http://localhost:3000/api/stocks/{ProductID.Text}";
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    if (response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        string json = await response.Content.ReadAsStringAsync();
+                        StockSingleResponse result = JsonConvert.DeserializeObject<StockSingleResponse>(json);
+
+                        if (result != null && result.success && result.data != null)
                         {
-                            sdr.Read();
-                            Productname.Text = sdr["PNAME"].ToString();
+                            Productname.Text = result.data.product_name;
+                            Quantity.Text = result.data.quantity.ToString();
                         }
-                        
+                        else
+                        {
+                            MessageBox.Show("Stock not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                    using (SqlCommand cmd = new SqlCommand("SELECT QUANTITY FROM STOCK WHERE PID = @pid"))
+                    else
                     {
-                        cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            sdr.Read();
-                            Quantity.Text = sdr["QUANTITY"].ToString();
-                        }
-                        con.Close();
+                        MessageBox.Show("Stock not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Stock not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                MessageBox.Show("API Error: " + ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -87,5 +71,28 @@ namespace ShopManagementSystem
         {
             this.Close();
         }
+
+        private void StockView_Load(object sender, EventArgs e)
+        {
+            Productname.ReadOnly = true;
+            Productname.BackColor = System.Drawing.Color.LightGray;
+            Quantity.ReadOnly = true;
+            Quantity.BackColor = System.Drawing.Color.LightGray;
+        }
+    }
+
+    public class StockSingleResponse
+    {
+        public bool success { get; set; }
+        public StockSingleData data { get; set; }
+    }
+
+    public class StockSingleData
+    {
+        public int stock_id { get; set; }
+        public int product_id { get; set; }
+        public string product_name { get; set; }
+        public int quantity { get; set; }
+        public DateTime last_updated { get; set; }
     }
 }

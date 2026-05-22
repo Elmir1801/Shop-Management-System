@@ -45,8 +45,9 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1924, 53);
+            this.panel1.Size = new System.Drawing.Size(1028, 43);
             this.panel1.TabIndex = 41;
             // 
             // label1
@@ -54,9 +55,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(900, 9);
+            this.label1.Location = new System.Drawing.Point(675, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(193, 32);
+            this.label1.Size = new System.Drawing.Size(153, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "DELETE VENDOR";
             // 
@@ -64,9 +66,10 @@
             // 
             this.Delete.BackColor = System.Drawing.Color.Red;
             this.Delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Delete.Location = new System.Drawing.Point(434, 138);
+            this.Delete.Location = new System.Drawing.Point(326, 112);
+            this.Delete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(133, 38);
+            this.Delete.Size = new System.Drawing.Size(100, 31);
             this.Delete.TabIndex = 44;
             this.Delete.Text = "DELETE";
             this.Delete.UseVisualStyleBackColor = false;
@@ -75,27 +78,30 @@
             // VendorID
             // 
             this.VendorID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VendorID.Location = new System.Drawing.Point(164, 140);
+            this.VendorID.Location = new System.Drawing.Point(123, 114);
+            this.VendorID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.VendorID.Name = "VendorID";
-            this.VendorID.Size = new System.Drawing.Size(200, 27);
+            this.VendorID.Size = new System.Drawing.Size(151, 23);
             this.VendorID.TabIndex = 43;
             // 
             // VendorIDlbl
             // 
             this.VendorIDlbl.AutoSize = true;
             this.VendorIDlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VendorIDlbl.Location = new System.Drawing.Point(12, 140);
+            this.VendorIDlbl.Location = new System.Drawing.Point(9, 114);
+            this.VendorIDlbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.VendorIDlbl.Name = "VendorIDlbl";
-            this.VendorIDlbl.Size = new System.Drawing.Size(84, 20);
+            this.VendorIDlbl.Size = new System.Drawing.Size(71, 17);
             this.VendorIDlbl.TabIndex = 42;
             this.VendorIDlbl.Text = "Vendor ID";
             // 
             // Search
             // 
             this.Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Search.Location = new System.Drawing.Point(434, 85);
+            this.Search.Location = new System.Drawing.Point(326, 69);
+            this.Search.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(133, 36);
+            this.Search.Size = new System.Drawing.Size(100, 29);
             this.Search.TabIndex = 47;
             this.Search.Text = "SEARCH";
             this.Search.UseVisualStyleBackColor = true;
@@ -104,26 +110,28 @@
             // VendorName
             // 
             this.VendorName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VendorName.Location = new System.Drawing.Point(164, 90);
+            this.VendorName.Location = new System.Drawing.Point(123, 73);
+            this.VendorName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.VendorName.Name = "VendorName";
-            this.VendorName.Size = new System.Drawing.Size(200, 26);
+            this.VendorName.Size = new System.Drawing.Size(151, 23);
             this.VendorName.TabIndex = 40;
             // 
             // Vendornamelbl
             // 
             this.Vendornamelbl.AutoSize = true;
             this.Vendornamelbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Vendornamelbl.Location = new System.Drawing.Point(17, 90);
+            this.Vendornamelbl.Location = new System.Drawing.Point(13, 73);
+            this.Vendornamelbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Vendornamelbl.Name = "Vendornamelbl";
-            this.Vendornamelbl.Size = new System.Drawing.Size(111, 20);
+            this.Vendornamelbl.Size = new System.Drawing.Size(95, 17);
             this.Vendornamelbl.TabIndex = 46;
             this.Vendornamelbl.Text = "Vendor Name";
             // 
             // VendorDelete
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.VendorID);
@@ -131,10 +139,12 @@
             this.Controls.Add(this.Search);
             this.Controls.Add(this.VendorName);
             this.Controls.Add(this.Vendornamelbl);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "VendorDelete";
             this.Text = "VendorDelete";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Deactivate += new System.EventHandler(this.VendorDelete_Deactivate);
+            this.Load += new System.EventHandler(this.VendorDelete_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

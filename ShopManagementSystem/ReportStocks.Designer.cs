@@ -32,7 +32,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.print = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.panel1.SuspendLayout();
@@ -42,22 +41,24 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1924, 53);
+            this.panel1.Size = new System.Drawing.Size(1028, 43);
             this.panel1.TabIndex = 39;
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Purple;
             this.panel3.Controls.Add(this.label9);
-            this.panel3.Location = new System.Drawing.Point(0, 700);
+            this.panel3.Location = new System.Drawing.Point(0, 569);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(2200, 53);
+            this.panel3.Size = new System.Drawing.Size(1650, 43);
             this.panel3.TabIndex = 36;
             // 
             // label9
@@ -65,9 +66,10 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.Control;
-            this.label9.Location = new System.Drawing.Point(639, 11);
+            this.label9.Location = new System.Drawing.Point(479, 9);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(339, 32);
+            this.label9.Size = new System.Drawing.Size(267, 25);
             this.label9.TabIndex = 0;
             this.label9.Text = "SHOP MANAGEMENT SYSTEM";
             // 
@@ -76,22 +78,12 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(900, 9);
+            this.label7.Location = new System.Drawing.Point(675, 7);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(338, 32);
+            this.label7.Size = new System.Drawing.Size(269, 25);
             this.label7.TabIndex = 0;
             this.label7.Text = "CURRENTLY AVAILABLE STOCK";
-            // 
-            // print
-            // 
-            this.print.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.print.Location = new System.Drawing.Point(926, 435);
-            this.print.Name = "print";
-            this.print.Size = new System.Drawing.Size(209, 33);
-            this.print.TabIndex = 41;
-            this.print.Text = "Print";
-            this.print.UseVisualStyleBackColor = true;
-            this.print.Click += new System.EventHandler(this.print_Click);
             // 
             // dataGridView1
             // 
@@ -99,20 +91,21 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(736, 174);
+            this.dataGridView1.Location = new System.Drawing.Point(520, 141);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(607, 255);
+            this.dataGridView1.Size = new System.Drawing.Size(539, 239);
             this.dataGridView1.TabIndex = 40;
             // 
             // ReportStocks
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.print);
             this.Controls.Add(this.dataGridView1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ReportStocks";
             this.Text = "ReportStocks";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -133,7 +126,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button print;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Drawing.Printing.PrintDocument printDocument1;
     }

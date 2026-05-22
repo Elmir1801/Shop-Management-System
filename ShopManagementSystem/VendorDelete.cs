@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class VendorDelete : Form
     {
-        /*
-         * 
-         * This cass handels deletion of vendor details.
-         * 
-         */ 
-
-        SqlConnection con;
+        MySqlConnection con;  // ← changed
 
         public VendorDelete()
         {
@@ -31,28 +25,21 @@ namespace ShopManagementSystem
             try
             {
                 Connect connectObj = new Connect();
-
                 using (con = connectObj.connect())
                 {
-
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT VID FROM VENDOR WHERE VNAME = @vname"))
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT VID FROM VENDOR WHERE VNAME = @vname"))  // ← changed
                     {
                         cmd.Parameters.AddWithValue("@vname", VendorName.Text);
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())  // ← changed
                         {
                             sdr.Read();
                             VendorID.Text = sdr["VID"].ToString();
                         }
-
                         con.Close();
                     }
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -60,7 +47,7 @@ namespace ShopManagementSystem
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }
@@ -73,24 +60,18 @@ namespace ShopManagementSystem
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("DELETE FROM VENDOR WHERE VID = @vid", con);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM VENDOR WHERE VID = @vid", con);  // ← changed
                 cmd.Parameters.AddWithValue("@vid", VendorID.Text);
                 int i = cmd.ExecuteNonQuery();
-
-                
-                //If count is equal to 1, than show frmMain form
                 if (i != 0)
                 {
-                    MessageBox.Show("Customer Deletion Successful!");
-
+                    MessageBox.Show("Vendor Deletion Successful!");
                 }
                 else
                 {
-                    MessageBox.Show("Customer Deletion Failed");
+                    MessageBox.Show("Vendor Deletion Failed");
                 }
                 con.Close();
-                //Clear the fields
                 VendorID.Clear();
                 VendorName.Clear();
             }
@@ -98,11 +79,22 @@ namespace ShopManagementSystem
             {
                 MessageBox.Show("Vendor Not found");
             }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
         }
 
         private void VendorDelete_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void VendorDelete_Load(object sender, EventArgs e)
+        {
         }
     }
 }

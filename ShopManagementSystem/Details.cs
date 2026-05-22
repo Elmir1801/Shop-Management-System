@@ -16,5 +16,10 @@ namespace ShopManagementSystem
         {
             InitializeComponent();
         }
+
+        private void Details_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

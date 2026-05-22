@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,58 +9,58 @@ namespace ShopManagementSystem
 {
     public partial class StockInsert : Form
     {
-        /*
-         * 
-         * This class handles insertion of Stock details.
-         * 
-         * 
-         * 
-         */ 
-        SqlConnection con;
-
         public StockInsert()
         {
             InitializeComponent();
         }
 
-        private void search_Click(object sender, EventArgs e)
+        private async void search_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProductID.Text))
+            {
+                MessageBox.Show("Please enter Product ID", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            await SearchProduct();
+        }
+
+        private async Task SearchProduct()
         {
             try
             {
-                Connect connectObj = new Connect();
-             
-                using (con = connectObj.connect())
+                using (HttpClient client = new HttpClient())
                 {
+                    string apiUrl = $"http://localhost:3000/api/products/{ProductID.Text}";
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    if (response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        string json = await response.Content.ReadAsStringAsync();
+                        ProductResponse result = JsonConvert.DeserializeObject<ProductResponse>(json);
+
+                        if (result != null && result.success && result.data != null)
                         {
-                            sdr.Read();
-                            ProductName.Text = sdr["PNAME"].ToString();
+                            ProductName.Text = result.data.product_name;
                         }
-                        con.Close();
+                        else
+                        {
+                            MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                MessageBox.Show("API Error: " + ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void Add_Click(object sender, EventArgs e)
+        private async void Add_Click(object sender, EventArgs e)
         {
             if (ProductID.Text == "" || Quantity.Text == "" || ProductName.Text == "")
             {
@@ -74,43 +70,41 @@ namespace ShopManagementSystem
 
             try
             {
-                Connect connectObj = new Connect();
+                int productId = Convert.ToInt32(ProductID.Text);
+                int quantity = Convert.ToInt32(Quantity.Text);
 
-                con = connectObj.connect();
-                
-                SqlCommand cmd = new SqlCommand("Insert into STOCK (PID,QUANTITY) values(@pID,@quantity);", con);
-                
-                cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                cmd.Parameters.AddWithValue("@quantity", Quantity.Text);
-                int i = cmd.ExecuteNonQuery();
-                //If count is equal to 1, than show frmMain form
-                if (i != 0)
+                var stockData = new
                 {
-                    MessageBox.Show("Stock Insertion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    product_id = productId,
+                    quantity = quantity
+                };
 
-                }
-                else
+                string json = JsonConvert.SerializeObject(stockData);
+
+                using (HttpClient client = new HttpClient())
                 {
-                    MessageBox.Show("Stock Insertion Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    string apiUrl = "http://localhost:3000/api/stocks";
 
-                con.Close();
-                //Clear all the fields
-                ProductID.Clear();
-                Quantity.Clear();
-                ProductName.Clear();
+                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Stock Insertion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ProductID.Clear();
+                        Quantity.Clear();
+                        ProductName.Clear();
+                    }
+                    else
+                    {
+                        string error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Stock Insertion Failed\n" + error, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-
-                }
             }
         }
 
@@ -124,6 +118,12 @@ namespace ShopManagementSystem
         private void StockInsert_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void StockInsert_Load(object sender, EventArgs e)
+        {
+            ProductName.ReadOnly = true;
+            ProductName.BackColor = System.Drawing.Color.LightGray;
         }
     }
 }

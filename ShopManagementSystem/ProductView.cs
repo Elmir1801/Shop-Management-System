@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,58 +10,77 @@ namespace ShopManagementSystem
 {
     public partial class ProductView : Form
     {
-        /*
-         * 
-         * This class handles the view operations of Product details.
-         * 
-         * 
-         */ 
-        SqlConnection con;
-
         public ProductView()
         {
             InitializeComponent();
         }
 
-        private void Search_Click(object sender, EventArgs e)
+        private async void Search_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProductName.Text))
+            {
+                MessageBox.Show("Please enter product name", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            await SearchProductByName();
+        }
+
+        private async Task SearchProductByName()
         {
             try
             {
-                Connect connectObj = new Connect();
-
-                using (con = connectObj.connect())
+                using (HttpClient client = new HttpClient())
                 {
+                    string apiUrl = "http://localhost:3000/api/products";
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT PID,PNAME,AMOUNT,VID FROM PRODUCT WHERE PNAME = @pname"))
+                    if (!response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@pname", ProductName.Text);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            sdr.Read();
-                            ProdName.Text = sdr["PNAME"].ToString();
+                        MessageBox.Show("Failed to connect to API.", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-                            VendorID.Text = sdr["VID"].ToString();
-                            Amount.Text = sdr["AMOUNT"].ToString();
-                            ProductID.Text = sdr["PID"].ToString();
-                        }
-                        con.Close();
+                    string json = await response.Content.ReadAsStringAsync();
+                    ProductListResponse result = JsonConvert.DeserializeObject<ProductListResponse>(json);
+
+                    if (result == null || !result.success || result.data == null || result.data.Count == 0)
+                    {
+                        MessageBox.Show("No product data found from API.", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    string searchText = ProductName.Text.Trim().ToLower();
+
+                    // 1. exact match first
+                    var product = result.data.FirstOrDefault(p =>
+                        !string.IsNullOrWhiteSpace(p.product_name) &&
+                        p.product_name.Trim().Equals(searchText, StringComparison.OrdinalIgnoreCase));
+
+                    // 2. partial match if exact match not found
+                    if (product == null)
+                    {
+                        product = result.data.FirstOrDefault(p =>
+                            !string.IsNullOrWhiteSpace(p.product_name) &&
+                            p.product_name.ToLower().Contains(searchText));
+                    }
+
+                    if (product != null)
+                    {
+                        ProdName.Text = product.product_name;
+                        Amount.Text = product.price.ToString();
+                        VendorID.Text = product.brand;
+                        ProductID.Text = product.product_id.ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Product not found!!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Product not found!!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                MessageBox.Show("API Error: " + ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -81,5 +97,37 @@ namespace ShopManagementSystem
         {
             this.Close();
         }
+
+        private void ProductView_Load(object sender, EventArgs e)
+        {
+            ProdName.ReadOnly = true;
+            Amount.ReadOnly = true;
+            VendorID.ReadOnly = true;
+            ProductID.ReadOnly = true;
+
+            ProdName.BackColor = System.Drawing.Color.LightGray;
+            Amount.BackColor = System.Drawing.Color.LightGray;
+            VendorID.BackColor = System.Drawing.Color.LightGray;
+            ProductID.BackColor = System.Drawing.Color.LightGray;
+        }
+    }
+
+    public class ProductListResponse
+    {
+        public bool success { get; set; }
+        public List<ProductItem> data { get; set; }
+    }
+
+    public class ProductItem
+    {
+        public int product_id { get; set; }
+        public int? php_product_id { get; set; }
+        public string product_name { get; set; }
+        public string description { get; set; }
+        public decimal price { get; set; }
+        public string image { get; set; }
+        public string category { get; set; }
+        public string brand { get; set; }
+        public int quantity { get; set; }
     }
 }

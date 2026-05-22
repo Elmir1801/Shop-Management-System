@@ -21,5 +21,10 @@ namespace ShopManagementSystem
         {
             this.Close();
         }
+
+        private void Developers_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

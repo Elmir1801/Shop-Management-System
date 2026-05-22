@@ -43,8 +43,9 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1924, 53);
+            this.panel1.Size = new System.Drawing.Size(1028, 43);
             this.panel1.TabIndex = 37;
             // 
             // label1
@@ -52,66 +53,80 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(900, 9);
+            this.label1.Location = new System.Drawing.Point(675, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 32);
+            this.label1.Size = new System.Drawing.Size(148, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "DELETE ORDERS";
             // 
             // Delete
             // 
+            this.Delete.BackColor = System.Drawing.Color.Red;
             this.Delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Delete.Location = new System.Drawing.Point(195, 157);
+            this.Delete.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Delete.Location = new System.Drawing.Point(146, 128);
+            this.Delete.Margin = new System.Windows.Forms.Padding(2);
             this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(133, 31);
+            this.Delete.Size = new System.Drawing.Size(100, 25);
             this.Delete.TabIndex = 41;
             this.Delete.Text = "DELETE";
-            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.UseVisualStyleBackColor = false;
             this.Delete.Click += new System.EventHandler(this.Delete_Click);
             // 
             // OrderID
             // 
             this.OrderID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OrderID.Location = new System.Drawing.Point(149, 106);
+            this.OrderID.Location = new System.Drawing.Point(112, 86);
+            this.OrderID.Margin = new System.Windows.Forms.Padding(2);
             this.OrderID.Name = "OrderID";
-            this.OrderID.Size = new System.Drawing.Size(179, 26);
+            this.OrderID.Size = new System.Drawing.Size(135, 23);
             this.OrderID.TabIndex = 40;
             // 
             // orderlbl
             // 
             this.orderlbl.AutoSize = true;
+            this.orderlbl.BackColor = System.Drawing.Color.Transparent;
             this.orderlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.orderlbl.Location = new System.Drawing.Point(22, 106);
+            this.orderlbl.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.orderlbl.Location = new System.Drawing.Point(22, 89);
+            this.orderlbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.orderlbl.Name = "orderlbl";
-            this.orderlbl.Size = new System.Drawing.Size(92, 20);
+            this.orderlbl.Size = new System.Drawing.Size(75, 17);
             this.orderlbl.TabIndex = 39;
             this.orderlbl.Text = "ORDER ID";
             // 
             // clear
             // 
+            this.clear.BackColor = System.Drawing.Color.Blue;
             this.clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clear.Location = new System.Drawing.Point(22, 157);
+            this.clear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.clear.Location = new System.Drawing.Point(16, 128);
+            this.clear.Margin = new System.Windows.Forms.Padding(2);
             this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(150, 31);
+            this.clear.Size = new System.Drawing.Size(112, 25);
             this.clear.TabIndex = 38;
             this.clear.Text = "CLEAR";
-            this.clear.UseVisualStyleBackColor = true;
+            this.clear.UseVisualStyleBackColor = false;
             this.clear.Click += new System.EventHandler(this.clear_Click);
             // 
             // OrderDelete
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 753);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.OrderID);
             this.Controls.Add(this.orderlbl);
             this.Controls.Add(this.clear);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OrderDelete";
             this.Text = "OrderDelete";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Deactivate += new System.EventHandler(this.OrderDelete_Deactivate);
+            this.Load += new System.EventHandler(this.OrderDelete_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

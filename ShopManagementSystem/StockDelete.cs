@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,90 +8,146 @@ namespace ShopManagementSystem
 {
     public partial class StockDelete : Form
     {
-        /*
-         * 
-         * This class handles the stock delete operation.
-         * 
-         * 
-         */ 
-        SqlConnection con;
         public StockDelete()
         {
             InitializeComponent();
         }
 
-        private void Delete_Click(object sender, EventArgs e)
+        private async void Search_Click(object sender, EventArgs e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(ProductID.Text))
             {
-                Connect connectObj = new Connect();
-
-                con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("DELETE FROM STOCK WHERE PID = @pid", con);
-                cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                int i = cmd.ExecuteNonQuery();
-                
-                //If count is equal to 1, than show frmMain form
-                if (i != 0)
-                {
-                    MessageBox.Show("Stock Deletion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-                else
-                {
-                    MessageBox.Show("Stock Deletion Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                con.Close();
-                ProductID.Clear();
-                ProductName.Clear();
+                MessageBox.Show("Please enter Product ID", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Product Not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-                }
-            }
+
+            await SearchStock();
         }
 
-        private void Search_Click(object sender, EventArgs e)
+        private async Task SearchStock()
         {
             try
             {
-                Connect connectObj = new Connect();
-                using (con = connectObj.connect())
+                using (HttpClient client = new HttpClient())
                 {
+                    string apiUrl = $"http://localhost:3000/api/stocks/{ProductID.Text}";
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    if (response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        con.Open();
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        string json = await response.Content.ReadAsStringAsync();
+                        SingleStockDeleteResponse result =
+                            JsonConvert.DeserializeObject<SingleStockDeleteResponse>(json);
+
+                        if (result != null && result.success && result.data != null)
                         {
-                            sdr.Read();
-                            ProductName.Text = sdr["PNAME"].ToString();
+                            ProductName.Text = result.data.product_name;
+
+                            if (result.data.quantity <= 0)
+                            {
+                                MessageBox.Show("Product has no stock", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
                         }
-                        con.Close();
+                        else
+                        {
+                            MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        string error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Product not found\n" + error, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("API Error: " + ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
+        }
+
+        private async void Delete_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProductID.Text))
             {
-                if(con != null)
+                MessageBox.Show("Please enter Product ID", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
                 {
-                    con.Close();
+                    // first check stock before delete
+                    string getUrl = $"http://localhost:3000/api/stocks/{ProductID.Text}";
+                    HttpResponseMessage getResponse = await client.GetAsync(getUrl);
+
+                    if (!getResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    string json = await getResponse.Content.ReadAsStringAsync();
+                    SingleStockDeleteResponse result =
+                        JsonConvert.DeserializeObject<SingleStockDeleteResponse>(json);
+
+                    if (result == null || !result.success || result.data == null)
+                    {
+                        MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    ProductName.Text = result.data.product_name;
+
+                    if (result.data.quantity <= 0)
+                    {
+                        MessageBox.Show("Product has no stock", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    DialogResult confirm = MessageBox.Show(
+                        "Are you sure you want to delete this stock?",
+                        "Confirm Delete",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (confirm != DialogResult.Yes)
+                        return;
+
+                    string deleteUrl = $"http://localhost:3000/api/stocks/{ProductID.Text}";
+                    HttpResponseMessage deleteResponse = await client.DeleteAsync(deleteUrl);
+
+                    if (deleteResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Stock Deletion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        RefreshOpenReportStocks();
+
+                        ProductID.Clear();
+                        ProductName.Clear();
+                    }
+                    else
+                    {
+                        string error = await deleteResponse.Content.ReadAsStringAsync();
+                        MessageBox.Show("Stock Deletion Failed\n" + error, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("API Error: " + ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RefreshOpenReportStocks()
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is ReportStocks reportStocks)
+                {
+                    reportStocks.RefreshStocksFromOutside();
+                    break;
                 }
             }
         }
@@ -111,5 +162,26 @@ namespace ShopManagementSystem
         {
             this.Close();
         }
+
+        private void StockDelete_Load(object sender, EventArgs e)
+        {
+            ProductName.ReadOnly = true;
+            ProductName.BackColor = System.Drawing.Color.LightGray;
+        }
+    }
+
+    public class SingleStockDeleteResponse
+    {
+        public bool success { get; set; }
+        public SingleStockDeleteData data { get; set; }
+    }
+
+    public class SingleStockDeleteData
+    {
+        public int stock_id { get; set; }
+        public int product_id { get; set; }
+        public string product_name { get; set; }
+        public int quantity { get; set; }
+        public DateTime last_updated { get; set; }
     }
 }

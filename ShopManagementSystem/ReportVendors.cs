@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,14 +14,8 @@ namespace ShopManagementSystem
 {
     public partial class ReportVendors : Form
     {
-        /*
-         * 
-         * This class will generate report of vendors
-         * 
-         * 
-         */
+        MySqlConnection con;  // ← changed
 
-        SqlConnection con;
         public ReportVendors()
         {
             InitializeComponent();
@@ -30,16 +24,15 @@ namespace ShopManagementSystem
         private void print_Click(object sender, EventArgs e)
         {
             DGVPrinterHelper.DGVPrinter printer = new DGVPrinter();
-            printer.Title = "Vendor Report";//Header
+            printer.Title = "Vendor Report";
             printer.SubTitle = string.Format("Date: {0}", DateTime.Now.Date.ToString("MM/dd/yyyy"));
             printer.SubTitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
             printer.PageNumbers = true;
             printer.PageNumberInHeader = false;
             printer.PorportionalColumns = true;
             printer.HeaderCellAlignment = StringAlignment.Near;
-            printer.Footer = "Shop Management System";//Footer
+            printer.Footer = "Shop Management System";
             printer.FooterSpacing = 15;
-            //Print landscape mode
             printer.printDocument.DefaultPageSettings.Landscape = true;
             printer.PrintDataGridView(dataGridView1);
         }
@@ -51,9 +44,7 @@ namespace ShopManagementSystem
                 var select = "SELECT * FROM VENDOR";
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-                var dataAdapter = new SqlDataAdapter(select, con);
-
-                var commandBuilder = new SqlCommandBuilder(dataAdapter);
+                var dataAdapter = new MySqlDataAdapter(select, con);  // ← changed
                 var ds = new DataSet();
                 dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
                 dataAdapter.Fill(ds);
@@ -61,13 +52,13 @@ namespace ShopManagementSystem
                 dataGridView1.DataSource = ds.Tables[0];
                 con.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
             finally
             {
-                if(con != null)
+                if (con != null)
                 {
                     con.Close();
                 }

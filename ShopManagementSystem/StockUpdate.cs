@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,59 +9,64 @@ namespace ShopManagementSystem
 {
     public partial class StockUpdate : Form
     {
-        /*
-         * 
-         * This class handles updation of Stock details.
-         * 
-         * 
-         */ 
-        SqlConnection con;
-
         public StockUpdate()
         {
             InitializeComponent();
         }
 
-        private void search_Click(object sender, EventArgs e)
+        private async void search_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProductID.Text))
+            {
+                MessageBox.Show("Please enter Product ID", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            await SearchStock();
+        }
+
+        private async Task SearchStock()
         {
             try
             {
-                Connect connectObj = new Connect();
-                using (con = connectObj.connect())
+                using (HttpClient client = new HttpClient())
                 {
+                    string apiUrl = $"http://localhost:3000/api/stocks/{ProductID.Text}";
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT PNAME FROM PRODUCT WHERE PID = @pid"))
+                    if (response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        string json = await response.Content.ReadAsStringAsync();
+                        SingleStockApiResponse result = JsonConvert.DeserializeObject<SingleStockApiResponse>(json);
+
+                        if (result != null && result.success && result.data != null)
                         {
-                            sdr.Read();
-                            ProductName.Text = sdr["PNAME"].ToString();
+                            ProductName.Text = result.data.product_name;
+                            Quantity.Text = result.data.quantity.ToString();
                         }
-                        con.Close();
+                        else
+                        {
+                            MessageBox.Show("Stock record not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        string error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Stock record not found\n" + error, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Product not found", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-                }
+                MessageBox.Show("API Error: " + ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void update_Click(object sender, EventArgs e)
+        private async void update_Click(object sender, EventArgs e)
         {
-            if (ProductID.Text == "" || Quantity.Text == "" || ProductName.Text == "")
+            if (string.IsNullOrWhiteSpace(ProductID.Text) ||
+                string.IsNullOrWhiteSpace(Quantity.Text) ||
+                string.IsNullOrWhiteSpace(ProductName.Text))
             {
                 MessageBox.Show("Please provide all the details", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -73,40 +74,50 @@ namespace ShopManagementSystem
 
             try
             {
-                Connect connectObj = new Connect();
-                con = connectObj.connect();
+                int productId = Convert.ToInt32(ProductID.Text);
+                int quantity = Convert.ToInt32(Quantity.Text);
 
-                SqlCommand cmd = new SqlCommand("UPDATE STOCK SET QUANTITY = @quantity WHERE PID = @pid", con);
-                
-                cmd.Parameters.AddWithValue("@pid", ProductID.Text);
-                cmd.Parameters.AddWithValue("@quantity", Quantity.Text);
-                int i = cmd.ExecuteNonQuery();
-                //If count is equal to 1, than show frmMain form
-                if (i != 0)
+                if (quantity < 0)
                 {
-                    MessageBox.Show("Stock Updation Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-                else
-                {
-                    MessageBox.Show("Stock Updation Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Quantity cannot be negative", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
-                con.Close();
-                ProductID.Clear();
-                Quantity.Clear();
-                ProductName.Clear();
+                var stockData = new
+                {
+                    quantity = quantity
+                };
+
+                string json = JsonConvert.SerializeObject(stockData);
+
+                using (HttpClient client = new HttpClient())
+                {
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    string apiUrl = $"http://localhost:3000/api/stocks/{productId}";
+
+                    HttpResponseMessage response = await client.PutAsync(apiUrl, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Stock Updation Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ProductID.Clear();
+                        Quantity.Clear();
+                        ProductName.Clear();
+                    }
+                    else
+                    {
+                        string error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Stock Updation Failed\n" + error, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Please enter valid numeric values.", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if(con != null)
-                {
-                    con.Close();
-                }
             }
         }
 
@@ -121,5 +132,31 @@ namespace ShopManagementSystem
         {
             this.Close();
         }
+
+        private void StockUpdate_Load(object sender, EventArgs e)
+        {
+            ProductName.ReadOnly = true;
+            ProductName.BackColor = System.Drawing.Color.LightGray;
+        }
+
+        private void Quantity_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    public class SingleStockApiResponse
+    {
+        public bool success { get; set; }
+        public SingleStockData data { get; set; }
+    }
+
+    public class SingleStockData
+    {
+        public int stock_id { get; set; }
+        public int product_id { get; set; }
+        public string product_name { get; set; }
+        public int quantity { get; set; }
+        public DateTime last_updated { get; set; }
     }
 }

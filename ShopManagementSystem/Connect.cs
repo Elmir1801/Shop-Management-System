@@ -1,46 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using MySql.Data.MySqlClient;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace ShopManagementSystem
 {
     public class Connect
     {
-        SqlConnection con;
+        MySqlConnection con;
+        public static string cs = "Server=localhost;Port=3306;Database=spms1;Uid=root;Pwd=;";
 
-        public static string cs = @"Data Source=.;Initial Catalog=SPMS1;Integrated Security=True";
-
-        public  SqlConnection connect()
+        public MySqlConnection connect()
         {
             try
             {
-                con = new SqlConnection(cs);
+                con = new MySqlConnection(cs);
                 con.Open();
                 return con;
-                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Connection Error: " + ex.Message);
             }
             return null;
         }
 
         public void closeConnection()
         {
-            if(con != null)
+            if (con != null && con.State == ConnectionState.Open)
             {
                 con.Close();
             }
         }
-
-        /*internal void Connect()
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }

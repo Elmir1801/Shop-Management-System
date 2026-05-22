@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;  // ← changed
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,15 +13,7 @@ namespace ShopManagementSystem
 {
     public partial class CustomerInsert : Form
     {
-
-        /*
-         * 
-         * This class is used to handle customer data insertion.
-         * 
-         * 
-         */
-
-        private SqlConnection con;
+        private MySqlConnection con;  // ← changed
         private static int cid = 1;
 
         public CustomerInsert()
@@ -36,22 +28,16 @@ namespace ShopManagementSystem
                 MessageBox.Show("Please provide all the details", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             if (phno.Text.Length != 10)
             {
                 MessageBox.Show("Enter valid Phone number", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             try
             {
                 Connect connectObj = new Connect();
                 con = connectObj.connect();
-
-                SqlCommand cmd = new SqlCommand("customer_in", con);
-                
-                
-                //To execute a stored procedure
+                MySqlCommand cmd = new MySqlCommand("customer_in", con);  // ← changed
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@cid", customerId.Text);
@@ -60,31 +46,23 @@ namespace ShopManagementSystem
                 cmd.Parameters.AddWithValue("@address", CustomerAddress.Text);
                 cmd.Parameters.AddWithValue("@email", CustomerEmail.Text);
                 cid += 1;
-
                 int i = cmd.ExecuteNonQuery();
-
                 if (i != 0)
                 {
                     MessageBox.Show("Customer Insertion Successful!", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
                     MessageBox.Show("Customer Insertion Failed", "Captions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 con.Close();
-
-                //Clear all the textboxes.
-
                 CustomerName.Clear();
                 phno.Clear();
                 CustomerAddress.Clear();
                 CustomerEmail.Clear();
                 customerId.Clear();
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -96,7 +74,7 @@ namespace ShopManagementSystem
                 }
             }
         }
-        
+
         private void clearButton_Click(object sender, EventArgs e)
         {
             CustomerName.Clear();
@@ -108,12 +86,15 @@ namespace ShopManagementSystem
 
         private void CustomerInsert_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //this.Close();
         }
 
         private void CustomerInsert_Deactivate(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void CustomerInsert_Load(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -50,9 +50,10 @@
             // 
             this.CustomerIdLabel.AutoSize = true;
             this.CustomerIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustomerIdLabel.Location = new System.Drawing.Point(12, 106);
+            this.CustomerIdLabel.Location = new System.Drawing.Point(9, 86);
+            this.CustomerIdLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.CustomerIdLabel.Name = "CustomerIdLabel";
-            this.CustomerIdLabel.Size = new System.Drawing.Size(104, 20);
+            this.CustomerIdLabel.Size = new System.Drawing.Size(85, 17);
             this.CustomerIdLabel.TabIndex = 54;
             this.CustomerIdLabel.Text = "Customer ID";
             // 
@@ -61,18 +62,20 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(900, 9);
+            this.label7.Location = new System.Drawing.Point(675, 7);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(240, 32);
+            this.label7.Size = new System.Drawing.Size(191, 25);
             this.label7.TabIndex = 0;
             this.label7.Text = "UPDATE CUSTOMERS";
             // 
             // customerID
             // 
             this.customerID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerID.Location = new System.Drawing.Point(196, 106);
+            this.customerID.Location = new System.Drawing.Point(147, 86);
+            this.customerID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.customerID.Name = "customerID";
-            this.customerID.Size = new System.Drawing.Size(277, 26);
+            this.customerID.Size = new System.Drawing.Size(209, 23);
             this.customerID.TabIndex = 1;
             // 
             // panel1
@@ -80,16 +83,18 @@
             this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel1.Controls.Add(this.label7);
             this.panel1.Location = new System.Drawing.Point(0, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2200, 53);
+            this.panel1.Size = new System.Drawing.Size(1650, 43);
             this.panel1.TabIndex = 52;
             // 
             // updateButton
             // 
             this.updateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateButton.Location = new System.Drawing.Point(271, 428);
+            this.updateButton.Location = new System.Drawing.Point(203, 348);
+            this.updateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(193, 38);
+            this.updateButton.Size = new System.Drawing.Size(145, 31);
             this.updateButton.TabIndex = 51;
             this.updateButton.Text = "UPDATE";
             this.updateButton.UseVisualStyleBackColor = true;
@@ -98,9 +103,10 @@
             // clearButton
             // 
             this.clearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearButton.Location = new System.Drawing.Point(15, 428);
+            this.clearButton.Location = new System.Drawing.Point(11, 348);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(175, 38);
+            this.clearButton.Size = new System.Drawing.Size(131, 31);
             this.clearButton.TabIndex = 50;
             this.clearButton.Text = "CLEAR";
             this.clearButton.UseVisualStyleBackColor = true;
@@ -109,89 +115,98 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 417);
+            this.label6.Location = new System.Drawing.Point(9, 339);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(0, 17);
+            this.label6.Size = new System.Drawing.Size(0, 13);
             this.label6.TabIndex = 49;
             // 
             // Email
             // 
             this.Email.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Email.Location = new System.Drawing.Point(195, 370);
+            this.Email.Location = new System.Drawing.Point(146, 301);
+            this.Email.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Email.Name = "Email";
-            this.Email.Size = new System.Drawing.Size(277, 26);
+            this.Email.Size = new System.Drawing.Size(209, 23);
             this.Email.TabIndex = 48;
             // 
             // EmailLabel
             // 
             this.EmailLabel.AutoSize = true;
             this.EmailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EmailLabel.Location = new System.Drawing.Point(11, 370);
+            this.EmailLabel.Location = new System.Drawing.Point(8, 301);
+            this.EmailLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.EmailLabel.Name = "EmailLabel";
-            this.EmailLabel.Size = new System.Drawing.Size(51, 20);
+            this.EmailLabel.Size = new System.Drawing.Size(42, 17);
             this.EmailLabel.TabIndex = 47;
             this.EmailLabel.Text = "Email";
             // 
             // customerAddress
             // 
             this.customerAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerAddress.Location = new System.Drawing.Point(195, 262);
+            this.customerAddress.Location = new System.Drawing.Point(146, 213);
+            this.customerAddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.customerAddress.Multiline = true;
             this.customerAddress.Name = "customerAddress";
-            this.customerAddress.Size = new System.Drawing.Size(277, 86);
+            this.customerAddress.Size = new System.Drawing.Size(209, 71);
             this.customerAddress.TabIndex = 46;
             // 
             // addressLabel
             // 
             this.addressLabel.AutoSize = true;
             this.addressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addressLabel.Location = new System.Drawing.Point(11, 262);
+            this.addressLabel.Location = new System.Drawing.Point(8, 213);
+            this.addressLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.addressLabel.Name = "addressLabel";
-            this.addressLabel.Size = new System.Drawing.Size(71, 20);
+            this.addressLabel.Size = new System.Drawing.Size(60, 17);
             this.addressLabel.TabIndex = 45;
             this.addressLabel.Text = "Address";
             // 
             // CustPhno
             // 
             this.CustPhno.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustPhno.Location = new System.Drawing.Point(195, 214);
+            this.CustPhno.Location = new System.Drawing.Point(146, 174);
+            this.CustPhno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.CustPhno.Name = "CustPhno";
-            this.CustPhno.Size = new System.Drawing.Size(277, 26);
+            this.CustPhno.Size = new System.Drawing.Size(209, 23);
             this.CustPhno.TabIndex = 44;
             // 
             // PhoneNoLabel
             // 
             this.PhoneNoLabel.AutoSize = true;
             this.PhoneNoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PhoneNoLabel.Location = new System.Drawing.Point(11, 214);
+            this.PhoneNoLabel.Location = new System.Drawing.Point(8, 174);
+            this.PhoneNoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PhoneNoLabel.Name = "PhoneNoLabel";
-            this.PhoneNoLabel.Size = new System.Drawing.Size(122, 20);
+            this.PhoneNoLabel.Size = new System.Drawing.Size(105, 17);
             this.PhoneNoLabel.TabIndex = 43;
             this.PhoneNoLabel.Text = " Phone number";
             // 
             // customerName
             // 
             this.customerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerName.Location = new System.Drawing.Point(195, 160);
+            this.customerName.Location = new System.Drawing.Point(146, 130);
+            this.customerName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.customerName.Name = "customerName";
-            this.customerName.Size = new System.Drawing.Size(277, 26);
+            this.customerName.Size = new System.Drawing.Size(209, 23);
             this.customerName.TabIndex = 2;
             // 
             // CustNameLabel
             // 
             this.CustNameLabel.AutoSize = true;
             this.CustNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustNameLabel.Location = new System.Drawing.Point(11, 160);
+            this.CustNameLabel.Location = new System.Drawing.Point(8, 130);
+            this.CustNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.CustNameLabel.Name = "CustNameLabel";
-            this.CustNameLabel.Size = new System.Drawing.Size(131, 20);
+            this.CustNameLabel.Size = new System.Drawing.Size(109, 17);
             this.CustNameLabel.TabIndex = 41;
             this.CustNameLabel.Text = "Customer Name";
             // 
             // CustomerUpdate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1447, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.CustomerIdLabel);
             this.Controls.Add(this.customerID);
             this.Controls.Add(this.panel1);
@@ -206,9 +221,11 @@
             this.Controls.Add(this.PhoneNoLabel);
             this.Controls.Add(this.customerName);
             this.Controls.Add(this.CustNameLabel);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "CustomerUpdate";
             this.Text = "CustomerUpdate";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.CustomerUpdate_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

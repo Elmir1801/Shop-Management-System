@@ -33,7 +33,7 @@
             this.update = new System.Windows.Forms.Button();
             this.clear = new System.Windows.Forms.Button();
             this.Quantity = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.qty = new System.Windows.Forms.Label();
             this.ProductName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ProductID = new System.Windows.Forms.TextBox();
@@ -44,12 +44,13 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1924, 53);
+            this.panel1.Size = new System.Drawing.Size(1028, 43);
             this.panel1.TabIndex = 39;
             // 
             // label1
@@ -57,119 +58,136 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(900, 9);
+            this.label1.Location = new System.Drawing.Point(675, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 32);
+            this.label1.Size = new System.Drawing.Size(141, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "UPDATE STOCK";
             // 
             // update
             // 
+            this.update.BackColor = System.Drawing.Color.LightGreen;
             this.update.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.update.Location = new System.Drawing.Point(202, 320);
+            this.update.Location = new System.Drawing.Point(152, 260);
+            this.update.Margin = new System.Windows.Forms.Padding(2);
             this.update.Name = "update";
-            this.update.Size = new System.Drawing.Size(139, 42);
+            this.update.Size = new System.Drawing.Size(104, 34);
             this.update.TabIndex = 47;
             this.update.Text = "UPDATE";
-            this.update.UseVisualStyleBackColor = true;
+            this.update.UseVisualStyleBackColor = false;
             this.update.Click += new System.EventHandler(this.update_Click);
             // 
             // clear
             // 
+            this.clear.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clear.Location = new System.Drawing.Point(18, 320);
+            this.clear.Location = new System.Drawing.Point(14, 260);
+            this.clear.Margin = new System.Windows.Forms.Padding(2);
             this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(139, 42);
+            this.clear.Size = new System.Drawing.Size(104, 34);
             this.clear.TabIndex = 46;
             this.clear.Text = "CLEAR";
-            this.clear.UseVisualStyleBackColor = true;
+            this.clear.UseVisualStyleBackColor = false;
             this.clear.Click += new System.EventHandler(this.clear_Click);
             // 
             // Quantity
             // 
             this.Quantity.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Quantity.Location = new System.Drawing.Point(150, 245);
+            this.Quantity.Location = new System.Drawing.Point(112, 199);
+            this.Quantity.Margin = new System.Windows.Forms.Padding(2);
             this.Quantity.Name = "Quantity";
-            this.Quantity.Size = new System.Drawing.Size(191, 26);
+            this.Quantity.Size = new System.Drawing.Size(144, 23);
             this.Quantity.TabIndex = 45;
+            this.Quantity.TextChanged += new System.EventHandler(this.Quantity_TextChanged);
             // 
-            // label4
+            // qty
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(15, 251);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 20);
-            this.label4.TabIndex = 44;
-            this.label4.Text = "label4";
+            this.qty.AutoSize = true;
+            this.qty.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.qty.Location = new System.Drawing.Point(11, 204);
+            this.qty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.qty.Name = "qty";
+            this.qty.Size = new System.Drawing.Size(61, 17);
+            this.qty.TabIndex = 44;
+            this.qty.Text = "Quantity";
             // 
             // ProductName
             // 
             this.ProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductName.Location = new System.Drawing.Point(150, 185);
+            this.ProductName.Location = new System.Drawing.Point(112, 150);
+            this.ProductName.Margin = new System.Windows.Forms.Padding(2);
             this.ProductName.Name = "ProductName";
             this.ProductName.ReadOnly = true;
-            this.ProductName.Size = new System.Drawing.Size(191, 26);
+            this.ProductName.Size = new System.Drawing.Size(144, 23);
             this.ProductName.TabIndex = 43;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(15, 191);
+            this.label3.Location = new System.Drawing.Point(11, 155);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 20);
+            this.label3.Size = new System.Drawing.Size(98, 17);
             this.label3.TabIndex = 42;
             this.label3.Text = "Product Name";
             // 
             // ProductID
             // 
             this.ProductID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductID.Location = new System.Drawing.Point(150, 127);
+            this.ProductID.Location = new System.Drawing.Point(112, 103);
+            this.ProductID.Margin = new System.Windows.Forms.Padding(2);
             this.ProductID.Name = "ProductID";
-            this.ProductID.Size = new System.Drawing.Size(191, 26);
+            this.ProductID.Size = new System.Drawing.Size(144, 23);
             this.ProductID.TabIndex = 41;
             // 
             // ProductIDlbl
             // 
             this.ProductIDlbl.AutoSize = true;
             this.ProductIDlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductIDlbl.Location = new System.Drawing.Point(15, 133);
+            this.ProductIDlbl.Location = new System.Drawing.Point(11, 108);
+            this.ProductIDlbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ProductIDlbl.Name = "ProductIDlbl";
-            this.ProductIDlbl.Size = new System.Drawing.Size(89, 20);
+            this.ProductIDlbl.Size = new System.Drawing.Size(74, 17);
             this.ProductIDlbl.TabIndex = 40;
             this.ProductIDlbl.Text = "Product ID";
             // 
             // search
             // 
+            this.search.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.search.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.search.Location = new System.Drawing.Point(385, 119);
+            this.search.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.search.Location = new System.Drawing.Point(289, 97);
+            this.search.Margin = new System.Windows.Forms.Padding(2);
             this.search.Name = "search";
-            this.search.Size = new System.Drawing.Size(139, 42);
+            this.search.Size = new System.Drawing.Size(104, 34);
             this.search.TabIndex = 50;
             this.search.Text = "Search";
-            this.search.UseVisualStyleBackColor = true;
+            this.search.UseVisualStyleBackColor = false;
             this.search.Click += new System.EventHandler(this.search_Click);
             // 
             // StockUpdate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 753);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.update);
             this.Controls.Add(this.clear);
             this.Controls.Add(this.Quantity);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.qty);
             this.Controls.Add(this.ProductName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ProductID);
             this.Controls.Add(this.ProductIDlbl);
             this.Controls.Add(this.search);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "StockUpdate";
             this.Text = "StockUpdate";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Deactivate += new System.EventHandler(this.StockUpdate_Deactivate);
+            this.Load += new System.EventHandler(this.StockUpdate_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -184,7 +202,7 @@
         private System.Windows.Forms.Button update;
         private System.Windows.Forms.Button clear;
         private System.Windows.Forms.TextBox Quantity;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label qty;
         private System.Windows.Forms.TextBox ProductName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox ProductID;
